@@ -1,0 +1,7 @@
+#!/bin/bash
+
+if [ -e ~/.last-backup ]; then
+  cat ~/.last-backup
+else
+  echo "Never backed up!"
+fi

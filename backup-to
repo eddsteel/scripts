@@ -1,0 +1,72 @@
+#!/bin/bash
+
+
+exit_on_error() {
+  if [ $1 -gt 0 ]; then
+    echo "An error occurred. Please check output."
+    exit 1
+  fi
+}
+
+backup_group() {
+	group="$1"
+	select_relevant_lines "${group}" $BACKUP_SERVER | while read source target
+	do
+		echo rsync "${source}" -rltDvzPhh $BACKUP_SERVER:${target} | bash
+		exit_on_error $?
+	done
+}
+
+backup_files() {
+name="$1"
+echo "  Syncing ${name}."
+backup_group "${name}"
+echo "  ${name} synced. OK. "
+}
+
+test_file()
+{
+	test -e ${1} || echo "couldn't find defn file for ${2}" 
+	test -e ${1} || exit 1
+}
+
+select_relevant_lines()
+{
+	name=$1
+  file=~/.backups/$2
+	test_file ${file} $2
+
+  sed -n -e '/^$/d' -e "/^${name}:/,/[a-z ]:/s/\(.*\)/\1/p" \
+  ${file} | grep -v ":$" 
+}
+
+get_groups()
+{
+	file=~/.backups/$1
+	test_file ${file} $1
+
+	grep -E "^[^#][a-z ]*:$" ${file} | sed 's/\(.*\):$/\1/'
+}
+
+
+test $# -lt 1 && echo "please provide server" && exit 1
+
+BACKUP_SERVER=$1
+
+test_file ~/.backups/$BACKUP_SERVER $BACKUP_SERVER
+
+
+if ! ping -c 1 -w 5 $BACKUP_SERVER 1>/dev/null 2>&1; then
+  echo "Couldn't reach $BACKUP_SERVER, exiting."
+  exit 2
+fi
+
+get_groups $BACKUP_SERVER | while read group
+do 
+	echo "  Syncing ${group}."
+	backup_group "${group}"
+	exit_on_error $?
+	echo "  ${group} synced. OK. "
+done
+
+date > ~/.last_backup_to_${BACKUP_SERVER}

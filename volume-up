@@ -1,0 +1,6 @@
+#!/bin/bash
+
+amixer -q sset PCM,0 10%+,10%+ unmute
+if [ -f ~/.volume ]; then
+  rm ~/.volume
+fi

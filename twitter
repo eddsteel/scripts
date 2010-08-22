@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+
+curl -u $TWITTER_USER:$TWITTER_PASS -d "status=$*" -d "source=curl" -H "X-Twitter-Client: curl" http://twitter.com/statuses/update.json
+

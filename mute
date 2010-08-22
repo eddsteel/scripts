@@ -1,0 +1,11 @@
+#!/bin/bash
+if [ -f ~/.volume ]; then
+  VOLUME=$(cat ~/.volume)
+  amixer -q sset PCM,0 $VOLUME,$VOLUME unmute
+  rm ~/.volume
+else
+  VOLUME=$(amixer get PCM,0 | grep "Right: Playback" | cut -f 6 -d' ')
+  echo $VOLUME > ~/.volume
+  amixer -q sset PCM,0 0,0 mute
+fi
+

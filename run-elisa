@@ -1,0 +1,13 @@
+#!/bin/bash
+
+# stop GNOME grabbing the volume keys
+
+# load key bindings
+xmodmap ~/.Xmodmap.elisa
+
+rungl elisa $*
+
+# get old key bindings back
+xmodmap ~/.Xmodmap
+
+# give GNOME back control over the volume keys

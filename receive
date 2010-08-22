@@ -1,0 +1,2 @@
+#!/usr/bin/env bash
+vlc -I dummy udp://@:1234
