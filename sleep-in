@@ -1,2 +1,2 @@
 #!/usr/bin/env bash
-echo "pmi action sleep" | at now + $1 minutes
+echo "pm-suspend" | sudo at now + $1 minutes
