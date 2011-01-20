@@ -1,2 +1,3 @@
 #!/usr/bin/env bash
 echo "pm-suspend" | sudo at now + $1 minutes
+blankscreen.sh
