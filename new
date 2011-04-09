@@ -1,0 +1,43 @@
+#!/usr/bin/env bash
+
+function usage() {
+        echo -n "Usage: new <template> <name> " >&2
+        echo "[placeholder1=value1 placeholder2=value2 ... ]" >&2
+        echo "Spaces are fine as long as you quote them." >&2
+}
+
+if [ $# -lt 2 ]; then usage; exit 1; fi
+
+TEMPLATE="$1"
+TEMPLATES=~/Templates
+NAME="$2"
+
+shift 2
+declare -A ARGS
+for i in "$@"
+do
+        key="$(echo $i | cut -d= -f1)"
+        value="$(echo $i | cut -d= -f2)"
+        ARGS["$key"]="$value"
+done
+ARGS["filename"]="$NAME"
+
+
+target="$TEMPLATES/$TEMPLATE"
+
+if [ -d $target ]
+then
+        cp -R $target $NAME
+else
+        file=$(find $TEMPLATES -name "$TEMPLATE.*" -printf '%f')
+        if [ -f "$TEMPLATES/$file" ]; then
+                newfile="$(echo $file | sed -e "s/^[^.]*/$NAME/")"
+                cp "$TEMPLATES/$file" "$newfile"
+                # process args
+                for ind in "${!ARGS[@]}"
+                do
+                        sed -i "s/@@$ind/${ARGS[$ind]}/g" "$newfile"
+                done
+        fi
+fi
+
