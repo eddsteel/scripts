@@ -3,7 +3,7 @@
 # execution of keepassx off it.
 
 # File locations
-DEV="/dev/disk/by-id/$(readlink /dev/disk/by-id/usb-Generic_USB_SD_Reader_12345678901234567890-0:0-part1)"
+DEV="/dev/sdb1"
 THUMB=/mnt/thumb
 KEY=$THUMB/passwords/key
 DB=$THUMB/passwords/db.kdb
