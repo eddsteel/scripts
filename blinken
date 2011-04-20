@@ -12,7 +12,9 @@ if [ $# -gt 0 ]; then
 			$0&
 			;;
 		stop)
-			rm $CONTROL
+			if [ -f $CONTROL ]; then
+				rm $CONTROL
+			fi
 			;;
 	esac
 else
