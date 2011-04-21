@@ -2,4 +2,4 @@
 #
 
 for d in  ~/.homesick/repos/*;
-do cd $i; git pull; done
+do cd $d; git pull; done
