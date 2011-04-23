@@ -1,0 +1,19 @@
+#!/usr/bin/env bash
+#
+# Push all projects in [dir] to [remote]
+#
+
+usage() {
+ echo "Usage: $0 dir remote"
+}
+
+if [ $# -lt 2 ]; then
+	usage
+	exit 1
+fi
+
+dir="$1"
+remote="$2"
+
+cd $dir
+for d in *; do cd $d && git push $remote; cd -; done
