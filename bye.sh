@@ -4,4 +4,5 @@
 cd ~/.private-edd/home
 date="`date`"
 git commit TODO -m "work: $date"
-git push
+git push origin master
+git push card master
