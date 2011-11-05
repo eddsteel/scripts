@@ -4,6 +4,7 @@
 
 # File locations
 DEV="/dev/sdb1"
+# DEV="/srv/card1"
 THUMB=/mnt/thumb
 KEY=$THUMB/passwords/key
 DB=$THUMB/passwords/db.kdb
@@ -17,12 +18,15 @@ XCO='-i -selection clipboard'
 
 # Mount thumbdrive
 mount() {
-	$TCT -k "" $TCO "$DEV" "$THUMB"
+	$TCT -p "$1" -k "" $TCO "$DEV" "$THUMB"
 }
 
 # Mount thumbdrive if it's not yet mounted
 while [ ! -f $KEY ]; do
-	mount
+	password=$(zenity --entry --text "Enter volume password"\
+		--entry-text="" --hide-text)
+	if [ $? -gt 0 ]; then exit 5; fi
+	mount "$password"
 done
 
 # Copy key location to clipboard and open passwords
