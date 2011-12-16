@@ -1,0 +1,20 @@
+#!/bin/sh
+
+case $1 in
+	toggle-playing)
+		mocp -G
+		;;
+	restart-or-previous)
+		mocp -r
+		;;
+	volume)
+		mocp -v $2
+		;;
+	next)
+		mocp -f
+		;;
+	*)
+		echo "nope" >&2
+		exit 1
+esac
+
