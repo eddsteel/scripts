@@ -2,4 +2,4 @@
 
 source ~/.zshfunctions/functions
 
-grabvars; screen -R
+grabvars; tmux -2
