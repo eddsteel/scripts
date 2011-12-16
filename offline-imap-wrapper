@@ -4,6 +4,8 @@ PID=$(pgrep offlineimap)
 
 [[ -n "$PID" ]] && kill $PID
 
-offlineimap -o -u quiet &>/dev/null &
+if [ -f ~/.newvars ]; then
+	source ~/.newvars
+fi
 
-exit 0
+offlineimap -q -o -u quiet &
