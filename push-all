@@ -16,4 +16,4 @@ dir="$1"
 remote="$2"
 
 cd $dir
-for d in *; do cd $d && git push $remote; cd -; done
+for d in *; do cd $d && echo $d && git push $remote; cd -; done
