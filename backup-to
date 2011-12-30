@@ -12,7 +12,7 @@ backup_group() {
 	group="$1"
 	select_relevant_lines "${group}" $BACKUP_SERVER | while read source target
 	do
-		echo rsync "${source}" -rltDvzPuh $BACKUP_SERVER:${target} | bash
+		echo rsync "${source}" -rCvzPuhL $BACKUP_SERVER:${target} | bash
 		exit_on_error $?
 	done
 }
