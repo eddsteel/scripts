@@ -1,3 +1,10 @@
 #!/bin/sh
 
-sakura -e tmux -2 source-file ~/.tmux.mutt.conf
+
+if $(tmux has-session -t mail 2>/dev/null); then
+	tcommand="attach -d -t mail"
+else
+	tcommand="source-file /home/edd/.tmux.mutt.conf"
+fi
+
+sakura -t tmutt -e "/home/edd/bin/grab-vars-and-screen $tcommand"
