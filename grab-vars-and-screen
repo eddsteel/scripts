@@ -2,4 +2,4 @@
 
 source ~/.zshfunctions/functions
 
-grabvars; tmux -2
+grabvars; tmux -2 $*
