@@ -3,34 +3,38 @@
 # execution of keepassx off it.
 
 # File locations
-DEV="/dev/sdb1"
-# DEV="/srv/card1"
+DEV="/dev/disk/by-id/usb-Multi_Flash_Reader_058F0O1111B1-0:0-part1"
+AUTORUN="/mnt/thumb/attach.sh"
 THUMB=/mnt/thumb
-KEY=$THUMB/passwords/key
-DB=$THUMB/passwords/db.kdb
+KEY=$THUMB/private/passwords/key
+DB=$THUMB/private/passwords/db.kdb
 
 # Commands and arguments
 KPX=/usr/bin/keepassx
-TCT=/usr/bin/truecrypt
 TCO='-t --protect-hidden=no'
 XCL=/usr/bin/xclip
 XCO='-i -selection clipboard'
 
 # Mount thumbdrive
 mount() {
-	$TCT -p "$1" -k "" $TCO "$DEV" "$THUMB"
+	sudo mount -tvfat $DEV $THUMB -ogid=1000,uid=1000
+}
+
+autorun() {
+	sh $AUTORUN
 }
 
 # Mount thumbdrive if it's not yet mounted
 while [ ! -f $KEY ]; do
-	password=$(zenity --entry --text "Enter volume password"\
-		--entry-text="" --hide-text)
+	while [ ! -f $AUTORUN ]; do
+		mount
+	done
+	autorun
 	if [ $? -gt 0 ]; then exit 5; fi
-	mount "$password"
 done
 
 # Copy key location to clipboard and open passwords
 if [ -f $KEY ]; then
 	echo -n "$KEY"| $XCL $XCO
-	$KPX $DB
+	nohup $KPX $DB
 fi
