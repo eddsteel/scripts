@@ -24,6 +24,10 @@ autorun() {
 	sh $AUTORUN
 }
 
+if [ ! -d $THUMB ]; then
+	sudo mkdir -p $THUMB
+fi
+
 # Mount thumbdrive if it's not yet mounted
 while [ ! -f $KEY ]; do
 	while [ ! -f $AUTORUN ]; do
