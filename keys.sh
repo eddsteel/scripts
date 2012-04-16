@@ -40,5 +40,5 @@ done
 # Copy key location to clipboard and open passwords
 if [ -f $KEY ]; then
 	echo -n "$KEY"| $XCL $XCO
-	nohup $KPX $DB
+	nohup $KPX $DB &
 fi
