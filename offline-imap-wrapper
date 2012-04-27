@@ -8,4 +8,6 @@ if [ -f ~/.newvars ]; then
 	source ~/.newvars
 fi
 
-offlineimap -q -o -u quiet &
+if ping -c 1 -w 5 google.com 1>/dev/null 2>&1; then
+	offlineimap -q -o -u quiet &
+fi
