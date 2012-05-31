@@ -4,10 +4,6 @@ PID=$(pgrep offlineimap)
 
 [[ -n "$PID" ]] && kill $PID
 
-if [ -f ~/.newvars ]; then
-	source ~/.newvars
-fi
+test -f ~/.newvars && source ~/.newvars
 
-if ping -c 1 -w 5 google.com 1>/dev/null 2>&1; then
-	offlineimap -q -o -u quiet &
-fi
+ping -c 1 -W 5 google.com >/dev/null 2>&1 && offlineimap -q -o -u quiet 2>/dev/null&
