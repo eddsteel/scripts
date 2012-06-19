@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 #
 
-cd ~/.private-edd/home
-date="`date`"
-git commit TODO -m "home: $date"
-git push origin master
-git push card master
+mr -qi pu
+cd ~/Projects; mr -qi pu; cd -
+
+tmux kill-session -t tmux
+

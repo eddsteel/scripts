@@ -1,22 +1,32 @@
 #!/usr/bin/env bash
 #
-# Updates homesick repos from any available remotes.
-#
-# Fails on first merge conflict.
+# Start the day.
 #
 
-test_remotes="origin card"
-remote=""
-
-cd ~/.homesick/repos
-for d in ~/.homesick/repos/*; do
-	echo $d
-	cd $d
-	for r in $test_remotes; do
-		if git fetch $r > /dev/null 2>&1; then
-			git pull $r master;
-		else
-			echo "Can't reach $r."
-		fi
+build_tmux_session_command() {
+	cmd="tmux -2 new -d -s tmux @@@ source $HOME/.tmux.conf"
+	for file in ~/.tmux.d/enabled/*; do
+		cmd="$cmd @@@ source $file"
 	done
-done
+	# to avoid escaping each time \; is added
+	cmd=$(echo $cmd | sed 's/@@@/\;/g')
+	$cmd
+}
+
+echo "Hai!"
+kinit
+
+echo "-> Building tmux session"
+build_tmux_session_command
+
+echo "-> mr up"
+mr -qi up
+
+echo "-> Projects, mr up"
+cd ~/Projects; mr -qi up; cd -
+
+echo "-> rebuilding tags"
+/usr/local/bin/ctags -R -f ~/.tags ~/Projects &
+
+tmux attach -t tmux
+
