@@ -19,14 +19,14 @@ kinit
 echo "-> Building tmux session"
 build_tmux_session_command
 
+echo "-> rebuilding tags"
+/usr/local/bin/ctags -R -f ~/.tags ~/Projects&
+
 echo "-> mr up"
 mr -qi up
 
 echo "-> Projects, mr up"
 cd ~/Projects; mr -qi up; cd -
 
-echo "-> rebuilding tags"
-/usr/local/bin/ctags -R -f ~/.tags ~/Projects &
-
-tmux attach -t tmux
+tmux -2 attach -t tmux
 
