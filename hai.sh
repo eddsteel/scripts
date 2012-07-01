@@ -14,7 +14,9 @@ build_tmux_session_command() {
 }
 
 echo "Hai!"
-kinit
+if $(which kinit); then
+	kinit
+fi
 
 echo "-> Building tmux session"
 build_tmux_session_command
