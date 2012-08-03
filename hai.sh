@@ -13,13 +13,24 @@ build_tmux_session_command() {
 	$cmd
 }
 
+build_chromium_session() {
+	if [ -f ~/.urls ]; then
+		cat ~/.urls | while read line; do
+			open $line
+		done
+	fi
+}
+
 echo "Hai!"
-if $(which kinit); then
+if which kinit; then
 	kinit
 fi
 
 echo "-> Building tmux session"
 build_tmux_session_command
+
+echo "-> Building Chromium session"
+build_chromium_session
 
 echo "-> rebuilding tags"
 /usr/local/bin/ctags -R -f ~/.tags ~/Projects&
