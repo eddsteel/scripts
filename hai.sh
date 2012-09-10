@@ -4,16 +4,8 @@
 #
 
 ${initial:=true}
+. ~/.tmux.d/include/functions
 
-build_tmux_session_command() {
-	cmd="tmux -2 new -d -s tmux @@@ source $HOME/.tmux.conf"
-	for file in ~/.tmux.d/enabled/*; do
-		cmd="$cmd @@@ source $file"
-	done
-	# to avoid escaping each time \; is added
-	cmd=$(echo $cmd | sed 's/@@@/\;/g')
-	$cmd
-}
 
 build_chromium_session() {
 	if [ -f ~/.urls ]; then
@@ -23,6 +15,7 @@ build_chromium_session() {
 	fi
 }
 
+
 if [ $initial = true ]; then
 	echo "Hai!"
 	if which kinit; then
@@ -31,7 +24,9 @@ if [ $initial = true ]; then
 fi
 
 echo "-> Building tmux session"
-build_tmux_session_command
+build_tmux_session
+add_projects_to_tmux
+tmux select-window -t "$session:1" \; rename-window "Home"
 
 if [ $initial = true ]; then
 	echo "-> Building Chromium session"
