@@ -26,6 +26,7 @@ fi
 echo "-> Building tmux session"
 build_tmux_session
 add_projects_to_tmux
+tmux set-option default-path $HOME
 tmux select-window -t "$session:1" \; rename-window "Home"
 
 if [ $initial = true ]; then
