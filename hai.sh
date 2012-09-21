@@ -21,6 +21,12 @@ if [ $initial = true ]; then
 	if which kinit; then
 		kinit
 	fi
+
+	if [ -f ~/.autostart ]; then
+		cat ~/.autostart | while read app; do 
+			nohup $app &
+		done
+	fi
 fi
 
 echo "-> Building tmux session"
