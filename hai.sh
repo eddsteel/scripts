@@ -19,7 +19,7 @@ build_chromium_session() {
 if [ $initial = true ]; then
 	echo "Hai!"
 	if which kinit; then
-		kinit
+		kinit edward
 	fi
 
 	if [ -f ~/.autostart ]; then
