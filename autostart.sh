@@ -4,6 +4,6 @@ export PATH=/home/edd/bin:$PATH
 /usr/bin/xcompmgr &
 /usr/bin/sparkleshare start &
 
-
+xset -b
 xrdb -merge .Xresources
 xmodmap .Xmodmap
