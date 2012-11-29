@@ -31,8 +31,9 @@ init_package_man() {
 			ruby -e "$(curl -fsSkL raw.github.com/mxcl/homebrew/go)"
 			brew update
 			;;
-		*) 
+		*)
 			echo Unsupported
+			fail
 			;;
 	esac
 }
@@ -42,29 +43,31 @@ install() {
 		$UBUNTU_RE)
 			sudo apt-get -y install $* ;;
 		$DEBIAN_RE)
-			sudo apt-get install $* ;;
+			sudo apt-get -y install $* ;;
 		Darwin*)
 			brew install $* ;;
-		*) 
+		*)
 			echo Unsupported
+			fail
 			;;
 	esac
+}
+
+check_install() {
+	which $1 >/dev/null
+	if [$? -gt 0 ]; then
+		install $1
+	fi
 }
 
 ## Prepare
 init_package_man || (echo "This isn't going to work."; exit 1)
 
 ## Check/get git
-which git >/dev/null
-if [ $? -gt 0 ]; then 
-	install git
-fi
+check_install git
 
 ## Check/get mr
-which mr >/dev/null
-if [ $? -gt 0 ]; then
-	install mr
-fi
+check_install mr
 
 ## Check/get vcsh
 if $APTABLE; then
