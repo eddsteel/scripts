@@ -18,8 +18,12 @@ build_chromium_session() {
 
 if [ $initial = true ]; then
 	echo "Hai!"
+	pgrep gpg-agent && killall gpg-agent
+	eval $(gpg-agent --daemon)
+
 	if which kinit; then
-		kinit edward
+		pass -c kinit
+		pbpaste | kinit --password-file=STDIN edward
 	fi
 
 	if [ -f ~/.autostart ]; then
