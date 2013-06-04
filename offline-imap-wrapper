@@ -7,3 +7,4 @@ PID=$(pgrep offlineimap)
 test -f ~/.newvars && source ~/.newvars
 
 ping -c 1 -W 5 google.com >/dev/null 2>&1 && offlineimap -q -o -u quiet 2>/dev/null&
+date
