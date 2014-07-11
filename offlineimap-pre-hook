@@ -1,0 +1,9 @@
+#!/bin/sh
+
+## update message locations
+# things removed from local inbox to archive
+notmuch search --output=files folder:gmail/INBOX and not tag:inbox | grep INBOX | xargs rm
+notmuch search --output=files folder:hootsuite/INBOX and not tag:inbox | grep INBOX | xargs rm
+
+# update
+notmuch new

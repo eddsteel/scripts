@@ -1,0 +1,28 @@
+#!/bin/sh
+
+notmuch new
+
+# update tags with things removed from remote inboxes
+# because folder includes all copies in other folders, so we can't use it to remove 
+notmuch tag -inbox tag:inbox 
+notmuch tag +inbox folder:gmail/INBOX
+notmuch tag +inbox folder:hootsuite/INBOX
+
+# Gmail spam
+notmuch tag -unread tag:unread and folder:gmail/spam
+
+## tagging etc
+# MLs
+notmuch tag -inbox +arch-general to:"arch-general@archlinux.org" tag:inbox
+notmuch tag -inbox +scala-user to:"scala-user@googlegroups.com" tag:inbox
+notmuch tag -inbox +akka-user to:"akka-user@googlegroups.com" tag:inbox
+
+# monitoring but not relevant
+notmuch tag -unread to:monitoring@hootsuite.com tag:unread
+
+# from me
+notmuch tag -unread "(from:edward.steel@gmail.com or from:edward.steel@hootsuite.com) and tag:unread"
+
+
+
+
