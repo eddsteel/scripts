@@ -1,0 +1,5 @@
+#!/bin/bash
+#
+
+passb ueber
+exec ssh ${1+"$@"}
