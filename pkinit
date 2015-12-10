@@ -1,0 +1,5 @@
+#!/bin/sh
+
+eval $(gpg --decrypt ~/.secrets/kerb.gpg 2>/dev/null)
+
+pass kinit 2>/dev/null | head -n 1 | kinit $KUSER@$KREALM 2>/dev/null
