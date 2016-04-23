@@ -1,0 +1,2 @@
+#!/bin/sh
+cvlc v4l:// :v4l-vdev="/dev/video0"
