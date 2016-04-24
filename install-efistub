@@ -1,0 +1,2 @@
+#!/bin/sh
+efibootmgr -d /dev/sda -p1  -c -L "Arch Linux" -l /vmlinuz-linux -u "cryptdevice=/dev/sda2:pv1 root=/dev/mapper/freamon-root rw initrd=/initramfs-linux.img"
