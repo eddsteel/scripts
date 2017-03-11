@@ -1,0 +1,5 @@
+#!/bin/sh
+
+dp1=$(light -G)
+
+echo "DP1 $dp1"

@@ -1,0 +1,11 @@
+#!/bin/sh
+#
+
+function perc() {
+    upower -i "$1" | grep 'percentage:' | cut -f 2 -d':' | tr -d '[:space:]'
+}
+
+bat1=$(perc /org/freedesktop/UPower/devices/battery_BAT0)
+bat2=$(perc /org/freedesktop/UPower/devices/battery_BAT1)
+
+echo "BAT0 $bat1  $bat2 BAT1"

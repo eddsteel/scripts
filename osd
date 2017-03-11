@@ -1,0 +1,14 @@
+#!/bin/sh
+#
+osd_cat \
+    --pos=top \
+    --offset=60 \
+    --align=center \
+    --colour=white \
+    --shadow=3 \
+    --shadowcolour=black \
+    --delay=1 \
+    --font="-*-bitstream vera sans-medium-r-*-*-*-200-*-*-*-*-*-*"
+#    --font="-*-Bitstream Vera Sans Mono-bold-normal-normal-*-15-*-*-*-m-0-fontset-startup"
+#    --font="-*-dejavu sans-bold-r-*-*-*-200-*-*-*-*-*-*"
+    $@
