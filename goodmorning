@@ -1,0 +1,11 @@
+#!/bin/sh
+# copying joeyh
+#
+
+# skip if ~/.no-alarm
+if [ -f /home/edd/.no-alarm ]; then
+    rm ~/.no-alarm
+else
+    pactl set-sink-volume 0 140%
+    ~/.local/bin/b radio play cbc1
+fi
