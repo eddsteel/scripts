@@ -26,4 +26,6 @@ if [ "toggle" = "$onoff" ]; then
     fi
 fi
 
-echo -e "power $onoff\nconnect 88:C6:26:0B:2A:D3\nquit\n" | bluetoothctl
+echo -e "power $onoff\nconnect 88:C6:26:0B:2A:D3\n" | bluetoothctl &
+sleep 2
+killall bluetoothctl
