@@ -1,0 +1,28 @@
+#!/bin/sh
+
+usage() {
+    echo "usage: plane-mode <on|off>"
+    exit $1
+}
+
+if [ $# -ne 1 ]; then
+   usage 1
+fi
+
+case $1 in
+    "on")
+        rfkill block wifi
+        rfkill block bluetooth
+        echo plane-mode on
+        ;;
+    "off")
+        rfkill unblock wifi
+        rfkill unblock bluetooth
+        echo plane-mode off
+        ;;
+    *)
+        usage 2
+        ;;
+esac
+
+rfkill list
