@@ -1,0 +1,6 @@
+#!/bin/sh
+#
+# Install the kernel and initrd into the freaking motherboard.
+#
+ARGS="cryptdevice=/dev/sda2:pv1 root=/dev/mapper/freamon-root rw initrd=/initramfs-linux.img intel_ioimmu=igfx_off"
+efibootmgr -d /dev/sda -p1  -c -L "Arch Linux" -l /vmlinuz-linux -u "$ARGS"

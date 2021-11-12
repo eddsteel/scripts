@@ -1,0 +1,12 @@
+#!/bin/sh
+
+if [ 1 -ne $# ]; then exit 1; fi
+
+case $1 in
+    "l")
+        notify-send -u critical "Linux mode"
+        ;;
+    "x")
+        notify-send -u critical "OS X mode"
+        ;;
+esac

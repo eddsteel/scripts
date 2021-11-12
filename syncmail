@@ -4,13 +4,11 @@
 mbsync -a
 mu index --quiet
 
-# delete inbox mailing-list messages (i.e. refile to archive, where they also are)
-mu find maildir:/gmail/INBOX AND flag:new AND list:akka-user.googlegroups.com --exec='rm'
-mu find maildir:/gmail/INBOX AND flag:new AND list:scala-user.googlegroups.com --exec='rm'
-mu find maildir:/gmail/INBOX AND flag:new AND list:scala-user.googlegroups.com --exec='rm'
-mu find maildir:/gmail/INBOX AND flag:new AND list:massdrop-1-0 --exec='rm'
-mu find maildir:/gmail/INBOX AND flag:new AND list:arch-general.archlinux.org --exec='rm'
-
-# update index to reflect any moved mail and sync
-mu index --quiet
-mbsync -a
+#mu find maildir:/gmail/INBOX AND flag:new AND list:akka-user.googlegroups.com --exec='rm'
+#mu find maildir:/gmail/INBOX AND flag:new AND list:scala-user.googlegroups.com --exec='rm'
+#mu find maildir:/gmail/INBOX AND flag:new AND list:scala-user.googlegroups.com --exec='rm'
+#mu find maildir:/gmail/INBOX AND flag:new AND list:arch-general.archlinux.org --exec='rm'
+#
+## update index to reflect any moved mail and sync
+#mu index --quiet
+#mbsync -a
