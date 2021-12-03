@@ -1,0 +1,66 @@
+#!/usr/bin/env bash
+# -*- sh -*-
+#
+# Simple operations for s3 mirroring. Get will take a search term, put
+# takes a file or dir name, push/pull need no arguments.
+
+S3_TARGET=${S3_TARGET-"s3://eddsteel-disk/"}
+S3_REGION=${S3_REGION-"ca-central-1"}
+S3_ARGS=${S3_ARGS-""}
+DIR="$(basename $(pwd))"
+
+refresh() {
+    echo "aws s3 ls $S3_TARGET$DIR/" > .remote.ls
+    aws s3 ls "$S3_TARGET$DIR/" >> .remote.ls
+}
+
+push() {
+    aws s3 $S3_ARGS --region $S3_REGION sync --size-only "../$DIR" "${S3_TARGET}$DIR"
+}
+
+pull() {
+    aws s3 $S3_ARGS --region $S3_REGION sync --size-only "${S3_TARGET}$DIR" "../$DIR"
+}
+
+getr() {
+    if [ "$term" == '-f' ] || [ ! -e ./.remote.ls ]; then
+        refresh
+        shift
+    fi
+    term="$1"
+
+    match="$(grep PRE .remote.ls | grep -i "$term" | cut -c32-)"
+
+    [ "" == "$match" ] && echo "$term not found" && exit 2
+    [ $(echo "$match" | wc -l ) -gt 1 ] && echo "multiple matches found: " && echo "$match" | head -n 15 && exit 3
+
+    aws s3 $S3_ARGS sync "$S3_TARGET$DIR/$match" "$match"
+}
+
+get() {
+    if [ "$term" == '-f' ] || [ ! -e ./.remote.ls ]; then
+        refresh
+        shift
+    fi
+    term="$1"
+
+    match="$(grep -i "$term" .remote.ls | cut -c32-)"
+
+    [ "" == "$match" ] && echo "$term not found" && exit 2
+
+    echo "$match" | while read f; do
+        aws s3 $S3_ARGS cp "$S3_TARGET$DIR/$f" .
+    done
+}
+
+put() {
+    aws s3 $S3_ARGS sync "$1" "$S3_TARGET$DIR/$1"
+}
+
+case "$1" in
+    "push") push ;;
+    "pull") pull ;;
+    "get")  shift; get "$@" ;;
+    "getr")  shift; getr "$@" ;;
+    "put")  shift; put "$@" ;;
+esac

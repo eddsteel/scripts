@@ -1,3 +1,2 @@
 #!/usr/bin/env bash
-curl www.whatismyip.org
-echo
+curl curlmyip.org
