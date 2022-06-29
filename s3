@@ -28,6 +28,7 @@ getr() {
         shift
     fi
     term="$1"
+    echo $term
 
     match="$(grep PRE .remote.ls | grep -i "$term" | cut -c32-)"
 

@@ -2,17 +2,19 @@
 with (import <nixpkgs> {});
 let
   include = [
-    ./edit-selection.sh
-    ./gpl
-    ./myip
-    ./s3
-    ./vantemp.sh
-    ./regnome.sh
+    "edit-selection.sh"
+    "gpl"
+    "myip"
+    "s3"
+    "regnome.sh"
+    "emms"
   ];
-in runCommand "scripts" {inherit include;} ''
-mkdir -p $out/bin
-for n in $include; do
-  script=$(echo $n | cut -c 45-) # there must be a better way.
-  cp $n "$out/bin/$script"
-done
-''
+in stdenv.mkDerivation rec {
+  name = "scripts";
+  unpackPhase = "true";
+  installPhase = ''
+    mkdir -p $out/bin
+    for n in ${toString include}; do cp -v ${./.}/$n $out/bin; done
+    for n in ${toString include}; do chmod +x $out/bin/$n; done
+  '';
+}

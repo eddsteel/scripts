@@ -1,0 +1,20 @@
+#!/usr/bin/env bash
+cmd="$1"
+
+ec () {
+    ~/.nix-profile/bin/emacsclient -s ~/run/emacs/server -e "$@"
+}
+
+case $cmd in
+     "add")
+         dir=$(realpath "$2")
+         ec "(emms-add-directory \"${dir}\")";;
+     "next")
+         ec "(emms-next)";;
+     "play-pause")
+         ec '(emms-pause)';;
+     "previous")
+         ec '(edd-emms/start-or-previous)';;
+     "now-playing")
+         ec '(edd-emms/now-playing)' | tr -d '"';;
+esac
