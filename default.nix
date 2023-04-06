@@ -7,7 +7,7 @@ let
     ./myip
     ./s3
     ./vantemp.sh
-    ./regnome.sh
+    ./raise.sh
   ];
 in runCommand "scripts" {inherit include;} ''
 mkdir -p $out/bin
